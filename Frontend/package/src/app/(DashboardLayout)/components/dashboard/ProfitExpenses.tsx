@@ -42,7 +42,7 @@ const ProfitExpenses = () => {
     colors: [primary, secondary],
     plotOptions: {
       bar: {
-        horizontal: false,
+        horizontal: true, // Cambiamos a barras horizontales
         barHeight: "60%",
         columnWidth: "42%",
         borderRadius: [6],
@@ -73,6 +73,8 @@ const ProfitExpenses = () => {
       },
     },
     yaxis: {
+      min: 0, // Valor mínimo
+      max: 20, // Valor máximo
       tickAmount: 4,
     },
     xaxis: {
@@ -86,6 +88,7 @@ const ProfitExpenses = () => {
       fillSeriesColor: false,
     },
   };
+
   const seriescolumnchart: any = [
     {
       name: "Pixel ",
