@@ -1,5 +1,6 @@
 package com.mindmakers.dashboard_api.auth;
 
+import com.mindmakers.dashboard_api.user.adaptadores.UserDetailsImpl;
 import com.mindmakers.dashboard_api.user.dto.UsuarioLoginDto;
 import com.mindmakers.dashboard_api.user.dto.UsuarioRegisterDto;
 import com.mindmakers.dashboard_api.user.entities.Usuario;
@@ -28,18 +29,22 @@ public class AuthenticationController {
     private UsuarioServices usuarioServices;
 
     @PostMapping("/login")
-    public ResponseEntity autenticarUsuario(@RequestBody @Valid UsuarioLoginDto usuarioLoginDto) {
+    public ResponseEntity<DatosjwtToken> autenticarUsuario(@RequestBody @Valid UsuarioLoginDto usuarioLoginDto) {
+
         Authentication token = new UsernamePasswordAuthenticationToken(usuarioLoginDto.correo(), usuarioLoginDto.contrasena());
 
         var usuarioAutenticado = authenticationManager.authenticate(token);
-        var jwtToken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
+
+        var jwtToken = tokenService.generarToken((UserDetailsImpl) usuarioAutenticado.getPrincipal());
         return ResponseEntity.ok(new DatosjwtToken(jwtToken));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registrarUsuario(@Valid @RequestBody UsuarioRegisterDto usuarioRegisterDto) {
+    public ResponseEntity<String> registrarUsuario(@RequestBody UsuarioRegisterDto usuarioRegisterDto) {
         try {
+            System.out.println("ENTRADA 2");
             usuarioServices.registrarUsuario(usuarioRegisterDto);
+            System.out.println("ENTRADA 3");
             return ResponseEntity.status(201).body("Usuario registrado exitosamente");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

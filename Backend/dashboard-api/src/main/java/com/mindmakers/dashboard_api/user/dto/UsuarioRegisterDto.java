@@ -8,8 +8,8 @@ import jakarta.validation.constraints.NotNull;
 public record UsuarioRegisterDto(
         @NotNull @NotBlank
         String username,
-        @NotNull @NotBlank @Email
-        String email,
+
+        String gmail,
         @NotNull @NotBlank
         String password,
         @NotNull @Min(1)

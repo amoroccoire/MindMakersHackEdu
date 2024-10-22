@@ -17,16 +17,22 @@ public class UsuarioServices {
     private BCryptPasswordEncoder passwordEncoder;
 
     public void registrarUsuario(UsuarioRegisterDto usuarioRegisterDto) {
-        Optional<Usuario> userFound = usuarioRepository.findByGmail(usuarioRegisterDto.email());
-        if (userFound.get() == null) {
+
+        Optional<Usuario> userFound = usuarioRepository.findByGmail(usuarioRegisterDto.gmail());
+        System.out.println();
+
+        if (userFound.isPresent()) {
+
+
             throw new RuntimeException("El correo ya está registrado.");
         }
+
         String cifrado = passwordEncoder.encode(usuarioRegisterDto.password());
         Usuario usuario = Usuario.builder()
                 .id(null)
                 .username(usuarioRegisterDto.username())
                 .password(cifrado)
-                .gmail(usuarioRegisterDto.email())
+                .gmail(usuarioRegisterDto.gmail())
                 .semestre(usuarioRegisterDto.semestre())
                 .build();
         usuarioRepository.save(usuario);

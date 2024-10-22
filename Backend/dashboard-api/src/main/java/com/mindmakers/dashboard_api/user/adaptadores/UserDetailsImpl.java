@@ -26,7 +26,15 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return usuario.getUsername();
+        return usuario.getGmail();
+    }
+
+    public Integer getId(){
+        return usuario.getId();
+    }
+
+    public String getGmail(){
+        return usuario.getGmail();
     }
 
     @Override

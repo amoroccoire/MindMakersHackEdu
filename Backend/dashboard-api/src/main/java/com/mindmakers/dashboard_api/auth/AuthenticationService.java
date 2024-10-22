@@ -20,7 +20,7 @@ public class AuthenticationService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Usuario> usuario = usuarioRepository.findByGmail(username);
 
-        if (usuario.get() == null) {
+        if (usuario.isEmpty()) {
             new UsernameNotFoundException("Usuario no encontrado");
         }
 

@@ -31,7 +31,7 @@ public class Usuario {
     private String username;
 
     @NotNull(message = "Password no puede ser vacio")
-    @Size(min=5, max = 15, message = "Contraseña debe tener al menos 5 caracteres")
+    //@Size(min=5, max = 15, message = "Contraseña debe tener al menos 5 caracteres")
     private String password;
 
     @NotNull
@@ -45,5 +45,7 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Tarea> tareas;
+
+
 
 }
