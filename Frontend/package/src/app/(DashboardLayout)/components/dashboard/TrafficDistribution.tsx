@@ -33,7 +33,32 @@ const TrafficDistribution = () => {
         donut: {
           size: "75%",
           background: "transparent",
-        },
+          labels: {
+            show: true,
+            name: {
+              show: true,
+              fontSize: '22px',  // Tamaño del texto del nombre
+              fontFamily: 'Plus Jakarta Sans, sans-serif',
+              fontWeight: 600,
+              color: theme.palette.text.primary,
+              offsetY: 0,
+              formatter: function () {
+                return "3"; // Este es el número
+              }
+            },
+            value: {
+              show: false
+            },
+            total: {
+              show: true,
+              label: "Total",
+              fontSize: '40px', // Aquí ajustas el tamaño del número en el centro
+              formatter: function () {
+                return "3"; // Número que aparece en el centro
+              }
+            }
+          }
+        }
       },
     },
     tooltip: {
@@ -60,6 +85,7 @@ const TrafficDistribution = () => {
       },
     ],
   };
+  
   const seriescolumnchart: any = [5368, 10500, 4106];
 
   return (
