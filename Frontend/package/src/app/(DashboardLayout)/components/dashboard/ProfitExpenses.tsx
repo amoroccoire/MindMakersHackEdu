@@ -43,7 +43,7 @@ const ProfitExpenses = () => {
     plotOptions: {
       bar: {
         horizontal: true, // Cambiamos a barras horizontales
-        barHeight: "60%",
+        barHeight: "90%",
         columnWidth: "42%",
         borderRadius: [6],
         borderRadiusApplication: "end",
@@ -91,12 +91,12 @@ const ProfitExpenses = () => {
 
   const seriescolumnchart: any = [
     {
-      name: "Pixel ",
-      data: [9, 5, 3, 7, 5, 10, 3],
+      name: "Examen ",
+      data: [12, 15, 13, 17, 15, 10, 19],
     },
     {
-      name: "Ample ",
-      data: [6, 3, 9, 5, 4, 6, 4],
+      name: "Continua ",
+      data: [16, 13, 19, 15, 14, 16, 14],
     },
   ];
 
