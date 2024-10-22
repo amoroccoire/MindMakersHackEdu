@@ -55,7 +55,7 @@ const Login2 = () => {
                     color="textSecondary"
                     mb={1}
                   >
-                    Your Social Campaigns
+                  ¡Bienvenido!
                   </Typography>
                 }
                 subtitle={
@@ -70,7 +70,7 @@ const Login2 = () => {
                       variant="h6"
                       fontWeight="500"
                     >
-                      New to Spike?
+                      ¿Eres nuevo en Innova Class?
                     </Typography>
                     <Typography
                       component={Link}
@@ -81,7 +81,7 @@ const Login2 = () => {
                         color: "primary.main",
                       }}
                     >
-                      Create an account
+                      Registrate ahora
                     </Typography>
                   </Stack>
                 }
