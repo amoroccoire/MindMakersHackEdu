@@ -1,4 +1,11 @@
 package com.mindmakers.dashboard_api.user.dto;
 
-public record UsuarioLoginDto() {
+import jakarta.validation.constraints.NotNull;
+
+public record UsuarioLoginDto(
+        @NotNull
+        String correo,
+        @NotNull
+        String contrasena
+) {
 }
