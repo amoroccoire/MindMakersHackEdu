@@ -84,7 +84,7 @@ def post():
     pregunta = payload.get('pregunta', '')
     
     if pregunta:
-        respuesta = chatbot.hacer_pregunta(pregunta)
+        respuesta = chatbot.hacer_pregunta(pregunta).content
         return jsonify({'respuesta': respuesta})
     else:
         return jsonify({'error': 'No se proporcionó ninguna pregunta.'}), 400
