@@ -23,7 +23,6 @@ const AuthRegister = ({ title, subtitle, subtext }: RegisterType) => {
     const [password, setPassword] = useState('');
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
-    const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
 
     const handleSemesterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -55,11 +54,9 @@ const AuthRegister = ({ title, subtitle, subtext }: RegisterType) => {
             }
 
             setSnackbarMessage('Registro exitoso');
-            setSnackbarSeverity('success');
             setOpenSnackbar(true);
         } catch (error) {
             setSnackbarMessage('Error al registrarse');
-            setSnackbarSeverity('error');
             setOpenSnackbar(true);
         }
     };
@@ -135,6 +132,7 @@ const AuthRegister = ({ title, subtitle, subtext }: RegisterType) => {
                     />
                 </Stack>
                 <Button
+                    href="/authentication/login"
                     color="primary"
                     variant="contained"
                     size="large"
@@ -152,7 +150,7 @@ const AuthRegister = ({ title, subtitle, subtext }: RegisterType) => {
                 autoHideDuration={6000}
                 onClose={() => setOpenSnackbar(false)}
             >
-                <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity}>
+                <Alert onClose={() => setOpenSnackbar(false)} severity="success">
                     {snackbarMessage}
                 </Alert>
             </Snackbar>
