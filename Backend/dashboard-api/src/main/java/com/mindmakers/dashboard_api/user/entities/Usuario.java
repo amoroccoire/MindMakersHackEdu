@@ -45,7 +45,4 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Tarea> tareas;
-
-
-
 }
