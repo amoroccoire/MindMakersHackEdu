@@ -23,6 +23,21 @@ const Menuitems = [
     href: "/",
   },
   {
+    navlabel: true,
+    subheader: "Tareas",
+  },
+  {
+    id: uniqueId(),
+    title: "Mis Tareas",
+    icon: IconLayoutDashboard,
+    href: "/task",
+  },
+
+  {
+    navlabel: true,
+    subheader: "Ingreso/Registro",
+  },
+  {
     id: uniqueId(),
     title: "Login",
     icon: IconLogin,
@@ -34,6 +49,7 @@ const Menuitems = [
     icon: IconUserPlus,
     href: "/authentication/register",
   },
+
 
 ];
 
