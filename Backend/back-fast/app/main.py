@@ -4,11 +4,21 @@ from sqlalchemy.orm import Session
 from . import models, schemas, crud
 from .database import SessionLocal, engine
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
 
 # Crea las tablas en la base de datos
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+# Agregar el middleware de CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permitir todas las solicitudes de origen (puedes restringirlo según sea necesario)
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir todos los métodos (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Permitir todos los encabezados
+)
 
 # Dependency para obtener la sesión de la base de datos
 def get_db():
