@@ -5,6 +5,7 @@ import com.mindmakers.dashboard_api.user.entities.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDateTime;
 
@@ -34,6 +35,8 @@ public class Tarea {
     @Min(value = 1, message = "El valor minimo permitido es 1")
     @Max(value = 4, message = "El valor maximo permitido es 4")
     private Integer prioridad;
+
+    private Boolean isCompleted = false;
 
     // Hora de creación de la tarea
     @NotNull

@@ -13,6 +13,8 @@ public record UsuarioRegisterDto(
         @NotNull @NotBlank
         String password,
         @NotNull @Min(1)
-        Integer semestre
+        Integer semestre,
+        @NotNull
+        String carreraProfesional
 ) {
 }

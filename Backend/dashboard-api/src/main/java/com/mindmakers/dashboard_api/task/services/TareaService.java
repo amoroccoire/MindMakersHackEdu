@@ -10,6 +10,5 @@ import java.util.List;
 
 @Service
 public class TareaService {
-
-
+    
 }

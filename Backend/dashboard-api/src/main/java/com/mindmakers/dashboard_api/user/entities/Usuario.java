@@ -42,6 +42,9 @@ public class Usuario {
     @Min(value = 1, message = "Semestre debe ser al menos 1")
     private Integer semestre;
 
+    @NotNull
+    private String carreraProfesional;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Tarea> tareas;

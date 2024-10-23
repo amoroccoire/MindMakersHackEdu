@@ -34,6 +34,7 @@ public class UsuarioServices {
                 .password(cifrado)
                 .gmail(usuarioRegisterDto.gmail())
                 .semestre(usuarioRegisterDto.semestre())
+                .carreraProfesional(usuarioRegisterDto.carreraProfesional())
                 .build();
         usuarioRepository.save(usuario);
     }
