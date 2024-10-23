@@ -29,3 +29,4 @@ Dashboard estudiantil desarrollado en Next.js como parte del hackathon MindMaker
 5. Tecnologías
     Next.js
     React
+6. Cualquier aporte es bienvenido
