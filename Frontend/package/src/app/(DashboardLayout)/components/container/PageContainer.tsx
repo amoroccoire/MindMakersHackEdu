@@ -1,5 +1,6 @@
 // import { Helmet } from 'react-helmet';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import ChatFloating from "../shared/ChatFloating";
 
 
 type Props = {
@@ -16,6 +17,7 @@ const PageContainer = ({ title, description, children }: Props) => (
         <meta name="description" content={description} />
       </Helmet>
       {children}
+      <ChatFloating />
     </div>
   </HelmetProvider>
 );
