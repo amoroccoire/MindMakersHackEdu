@@ -25,8 +25,26 @@ const ProfitExpenses = () => {
 
   // chart color
   const theme = useTheme();
-  const primary = theme.palette.primary.main;
-  const secondary = theme.palette.error.main;
+
+  // Función para asignar colores dinámicos según las notas
+  const getBarColors = (data: number[]) => {
+    return data.map((value) => {
+      if (value <= 10) return "rgba(255, 0, 0, 0.5)"; // Rojo medio opaco para notas entre 0 y 10
+      return "rgba(0, 128, 0, 0.5)"; // Verde opaco para notas entre 10 y 20
+    });
+  };
+
+  // Datos de los cursos
+  const seriesData = [
+    {
+      name: "Examen",
+      data: [5, 8, 13, 9, 15, 10, 19],
+    },
+    {
+      name: "Continua",
+      data: [8, 13, 3, 15, 12, 16, 14],
+    },
+  ];
 
   // chart
   const optionscolumnchart: any = {
@@ -39,18 +57,30 @@ const ProfitExpenses = () => {
       },
       height: 370,
     },
-    colors: [primary, secondary],
     plotOptions: {
       bar: {
-        horizontal: true, // Cambiamos a barras horizontales
+        horizontal: true, // Barras horizontales
         barHeight: "90%",
         columnWidth: "42%",
         borderRadius: [6],
         borderRadiusApplication: "end",
         borderRadiusWhenStacked: "all",
+        colors: {
+          ranges: [
+            {
+              from: 0,
+              to: 10,
+              color: "rgba(255, 0, 0, 0.5)", // Rojo medio opaco
+            },
+            {
+              from: 10,
+              to: 20,
+              color: "#1e7b01", // Verde opaco
+            },
+          ],
+        },
       },
     },
-
     stroke: {
       show: true,
       width: 5,
@@ -88,17 +118,6 @@ const ProfitExpenses = () => {
       fillSeriesColor: false,
     },
   };
-
-  const seriescolumnchart: any = [
-    {
-      name: "Examen ",
-      data: [12, 15, 13, 17, 15, 10, 19],
-    },
-    {
-      name: "Continua ",
-      data: [16, 13, 19, 15, 14, 16, 14],
-    },
-  ];
 
   return (
     <DashboardCard
@@ -140,7 +159,7 @@ const ProfitExpenses = () => {
       <Box className="rounded-bars">
         <Chart
           options={optionscolumnchart}
-          series={seriescolumnchart}
+          series={seriesData}
           type="bar"
           width={"100%"}
           height="370px"
