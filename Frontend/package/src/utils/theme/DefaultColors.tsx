@@ -13,7 +13,7 @@ const baselightTheme = createTheme({
   direction: "ltr",
   palette: {
     primary: {
-      main: "#0085db",
+      main: "#1B488F",
       light: "#e5f3fb",
       dark: "#0085db",
     },
@@ -48,7 +48,7 @@ const baselightTheme = createTheme({
     },
     grey: {
       100: "#F2F6FA",
-      200: "#f0f5f9",
+      200: "#e5e5e5",
       300: "#DFE5EF",
       400: "#7C8FAC",
       500: "#5A6A85",

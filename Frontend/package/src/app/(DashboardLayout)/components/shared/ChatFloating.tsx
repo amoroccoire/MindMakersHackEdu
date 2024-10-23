@@ -7,6 +7,8 @@ import CloseIcon from "@mui/icons-material/Close";
 const ChatFloating = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState("");
 
   // Ocultar el tooltip automáticamente después de 3 segundos
   useEffect(() => {
@@ -19,6 +21,27 @@ const ChatFloating = () => {
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSendMessage = () => {
+    if (inputValue.trim() !== "") {
+      // Agregar el mensaje del usuario a la lista de mensajes
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: inputValue, sender: "user" },
+      ]);
+
+      // Simular una respuesta automática del asistente después de un pequeño retraso
+      setTimeout(() => {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: "Respondiendo...", sender: "bot" },
+        ]);
+      }, 1000);
+
+      // Limpiar el campo de texto
+      setInputValue("");
+    }
   };
 
   return (
@@ -64,6 +87,8 @@ const ChatFloating = () => {
             flexDirection: "column",
             justifyContent: "space-between",
             p: 2,
+            maxHeight: "400px", // Para evitar que se expanda demasiado
+            overflowY: "auto", // Scroll automático
           }}
         >
           {/* Encabezado del chat */}
@@ -76,33 +101,58 @@ const ChatFloating = () => {
           </Box>
 
           {/* Cuerpo del chat */}
-          <Box sx={{ backgroundColor: "#ccefff", borderRadius: 2, p: 2, my: 2, minHeight: "150px" }}>
-            <Typography variant="body2" sx={{ color: "#333" }}>
-              ¡Hola! 👋 Si tienes alguna pregunta, estoy aquí para ayudarte.
-            </Typography>
+          <Box
+            sx={{
+              backgroundColor: "#f5f5f5",
+              borderRadius: 2,
+              p: 2,
+              my: 2,
+              minHeight: "150px",
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+            }}
+          >
+            {messages.map((message, index) => (
+              <Box
+                key={index}
+                sx={{
+                  alignSelf: message.sender === "user" ? "flex-start" : "flex-end",
+                  backgroundColor: message.sender === "user" ? "#ccefff" : "#0085db",
+                  color: message.sender === "user" ? "#333" : "#fff",
+                  borderRadius: "10px",
+                  p: 1,
+                  maxWidth: "80%",
+                }}
+              >
+                <Typography variant="body2">{message.text}</Typography>
+              </Box>
+            ))}
           </Box>
 
           {/* Campo de entrada de texto */}
-            <Box
+          <Box
             sx={{
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "white", // Fondo blanco
-                borderRadius: 1, // Bordes redondeados
-                paddingLeft: 0.5, // Espaciado a la izquierda
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "white", // Fondo blanco
+              borderRadius: 1, // Bordes redondeados
+              paddingLeft: 0.5, // Espaciado a la izquierda
             }}
-            >
+          >
             <TextField
-                fullWidth
-                variant="outlined"
-                size="small"
-                placeholder="Escribe tu mensaje..."
-                sx={{ mr: 1 }} // Espacio a la derecha del TextField
+              fullWidth
+              variant="outlined"
+              size="small"
+              placeholder="Escribe tu mensaje..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              sx={{ mr: 1 }} // Espacio a la derecha del TextField
             />
-            <IconButton color="primary" size="large">
-                <SendIcon />
+            <IconButton color="primary" size="large" onClick={handleSendMessage}>
+              <SendIcon />
             </IconButton>
-            </Box>
+          </Box>
         </Box>
       )}
     </Box>

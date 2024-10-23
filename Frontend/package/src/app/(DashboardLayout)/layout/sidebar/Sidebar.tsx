@@ -25,6 +25,7 @@ const Sidebar = ({
           width: sidebarWidth,
           flexShrink: 0,
           borderRadius: "13px",
+          color: "white",
         }}
       >
         <Drawer

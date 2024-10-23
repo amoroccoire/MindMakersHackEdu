@@ -33,7 +33,7 @@ const ProfitExpenses = () => {
     chart: {
       type: "bar",
       fontFamily: "'Plus Jakarta Sans', sans-serif;",
-      foreColor: "#adb0bb",
+      foreColor: "#000000",
       toolbar: {
         show: true,
       },
