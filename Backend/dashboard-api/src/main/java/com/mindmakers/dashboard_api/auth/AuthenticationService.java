@@ -21,7 +21,7 @@ public class AuthenticationService implements UserDetailsService {
         Optional<Usuario> usuario = usuarioRepository.findByGmail(username);
 
         if (usuario.isEmpty()) {
-            new UsernameNotFoundException("Usuario no encontrado");
+            throw new UsernameNotFoundException("Usuario no encontrado");
         }
 
         return new UserDetailsImpl(usuario.get());

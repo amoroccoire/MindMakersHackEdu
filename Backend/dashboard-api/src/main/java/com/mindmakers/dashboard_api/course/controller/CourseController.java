@@ -19,7 +19,7 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<ResponseCourse>> listCourse() {
         return ResponseEntity.ok(courseService.getAllCourses());
     }
@@ -30,14 +30,16 @@ public class CourseController {
         return course.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+
     @GetMapping("/name/{name}")
-    public List<ResponseCourse> getCoursesByName(@PathVariable String name) {
-        return courseService.getCoursesByName(name);
+    public ResponseEntity<List<ResponseCourse>> getCoursesByName(@PathVariable String name) {
+        return ResponseEntity.ok(courseService.getCoursesByName(name));
     }
 
+
     @GetMapping("/teacher/{teacherName}")
-    public List<ResponseCourse> getCoursesByTeacherName(@PathVariable String teacherName) {
-        return courseService.getCoursesByTeacherName(teacherName);
+    public ResponseEntity<List<ResponseCourse>> getCoursesByTeacherName(@PathVariable String teacherName) {
+        return ResponseEntity.ok(courseService.getCoursesByTeacherName(teacherName));
     }
 
 }

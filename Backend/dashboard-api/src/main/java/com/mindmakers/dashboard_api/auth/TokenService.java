@@ -35,6 +35,7 @@ public class TokenService {
 
     public boolean validarToken(String token) {
         try {
+
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer("apiHack")

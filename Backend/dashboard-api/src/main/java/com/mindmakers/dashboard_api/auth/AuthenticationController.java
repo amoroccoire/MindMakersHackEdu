@@ -42,9 +42,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<String> registrarUsuario(@RequestBody UsuarioRegisterDto usuarioRegisterDto) {
         try {
-            System.out.println("ENTRADA 2");
             usuarioServices.registrarUsuario(usuarioRegisterDto);
-            System.out.println("ENTRADA 3");
             return ResponseEntity.status(201).body("Usuario registrado exitosamente");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

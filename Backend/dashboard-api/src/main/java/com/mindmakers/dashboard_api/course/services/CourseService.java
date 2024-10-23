@@ -28,14 +28,12 @@ public class CourseService {
                 .map(ResponseCourse::new);
     }
 
-
     public List<ResponseCourse> getCoursesByName(String name) {
         return courseRepository.findByNameContainingIgnoreCase(name).stream()
+                .peek(course -> System.out.println("Course: " + course)) // Esto te permitirá ver cada objeto Course antes de mapearlo
                 .map(ResponseCourse::new)
                 .collect(Collectors.toList());
     }
-
-
     public List<ResponseCourse> getCoursesByTeacherName(String teacherName) {
         return courseRepository.findByTeacherNameContainingIgnoreCase(teacherName).stream()
                 .map(ResponseCourse::new)
