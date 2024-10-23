@@ -132,10 +132,10 @@ const AuthRegister = ({ title, subtitle, subtext }: RegisterType) => {
                     />
                 </Stack>
                 <Button
-                    href="/authentication/login"
                     color="primary"
                     variant="contained"
                     size="large"
+                    href= "/"
                     fullWidth
                     onClick={handleRegister} // Llama a la función de registro
                 >
