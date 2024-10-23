@@ -56,7 +56,7 @@ const ProductSales = () => {
     <DashboardCard
       title="Record Academico"
       action={
-        <Fab color="success" size="medium" sx={{color: '#ffffff'}}>
+        <Fab color="success" size="medium" sx={{ backgroundColor: '#008f39', color: '#ffffff'}}>
           <Typography variant="h6" component="span">
             17
           </Typography>
@@ -67,8 +67,8 @@ const ProductSales = () => {
       }
     >
       <>
-        <Typography variant="h3" fontWeight="700" mt="-20px">
-          17
+        <Typography variant="h5" fontWeight="400" mt="-20px">
+          7 cursos actualmente
         </Typography>
         <Stack direction="row" spacing={1} my={1} alignItems="center">
           <Avatar sx={{ bgcolor: successlight, width: 21, height: 21 }}>

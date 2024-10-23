@@ -70,12 +70,12 @@ const ProfitExpenses = () => {
             {
               from: 0,
               to: 10,
-              color: "rgba(255, 0, 0, 0.5)", // Rojo medio opaco
+              color: "#cc0605", // Rojo medio opaco
             },
             {
               from: 10,
               to: 20,
-              color: "#1e7b01", // Verde opaco
+              color: "#008f39", // Verde
             },
           ],
         },

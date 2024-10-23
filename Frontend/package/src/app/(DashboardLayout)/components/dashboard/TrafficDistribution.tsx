@@ -9,8 +9,8 @@ import DashboardCard from "@/app/(DashboardLayout)/components/shared/DashboardCa
 const TrafficDistribution = () => {
   // chart color
   const theme = useTheme();
-  const primary = theme.palette.primary.main;
-  const error = theme.palette.error.main;
+  const primary = "#cc0605";
+  const error = "#008f39";
   const secondary = theme.palette.secondary.light;
   const successlight = theme.palette.success.light;
 
