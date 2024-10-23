@@ -1,47 +1,71 @@
 import { useState, useEffect } from "react";
-import { Box, Typography, Avatar, Fab, TextField, IconButton, Tooltip } from "@mui/material";
+import { Box, Typography, Avatar, Fab, TextField, IconButton, Tooltip, CircularProgress } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
 
 const ChatFloating = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [loading, setLoading] = useState(false); // Estado de carga
 
-  // Ocultar el tooltip automáticamente después de 3 segundos
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowTooltip(false);
     }, 3000);
 
-    return () => clearTimeout(timer); // Limpiar el timeout si el componente se desmonta
+    return () => clearTimeout(timer);
   }, []);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputValue.trim() !== "") {
-      // Agregar el mensaje del usuario a la lista de mensajes
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: inputValue, sender: "user" },
       ]);
+      
+      setLoading(true); // Activar indicador de carga
 
-      // Simular una respuesta automática del asistente después de un pequeño retraso
-      setTimeout(() => {
+      try {
+        const response = await axios.post("https://reto-7-chatbox-production.up.railway.app/chatbot", {
+          pregunta: inputValue,
+        });
+
         setMessages((prevMessages) => [
           ...prevMessages,
-          { text: "Respondiendo...", sender: "bot" },
+          { text: response.data.respuesta || "Sin respuesta", sender: "bot" },
         ]);
-      }, 1000);
+      } catch (error) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: "Error al obtener la respuesta. Intenta de nuevo más tarde.", sender: "bot" },
+        ]);
+      } finally {
+        setLoading(false); // Desactivar indicador de carga
+      }
 
-      // Limpiar el campo de texto
-      setInputValue("");
+      setInputValue(""); // Limpiar campo de entrada
     }
+  };
+
+  // Función para convertir enlaces en clicables y formatear el texto
+  const formatMessage = (text) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+    // Convertir las respuestas en HTML
+    const formattedText = text
+      .replace(urlRegex, '<a href="$&" target="_blank" rel="noopener noreferrer" style="color: #0085db;">$&</a>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Formatear texto entre asteriscos
+      .replace(/\n/g, '<br />'); // Reemplazar saltos de línea con etiquetas <br>
+
+    return <span dangerouslySetInnerHTML={{ __html: formattedText }} style={{ color: '#000' }} />; // Texto en negro
   };
 
   return (
@@ -58,13 +82,13 @@ const ChatFloating = () => {
         <Tooltip
           title="¿Necesitas ayuda?"
           arrow
-          open={showTooltip} // Mostrar tooltip automáticamente por 3 segundos
-          onClose={() => setShowTooltip(false)} // Asegurar que se cierre después de 3 segundos
+          open={showTooltip}
+          onClose={() => setShowTooltip(false)}
           sx={{
             "& .MuiTooltip-tooltip": {
               backgroundColor: "white",
               color: "black",
-              fontSize: "16px", // Tamaño más grande de la letra
+              fontSize: "16px",
               boxShadow: 3,
             },
           }}
@@ -79,7 +103,7 @@ const ChatFloating = () => {
       {isOpen && (
         <Box
           sx={{
-            width: 300,
+            width: 600,
             backgroundColor: "#ffffff",
             borderRadius: 3,
             boxShadow: 3,
@@ -87,8 +111,8 @@ const ChatFloating = () => {
             flexDirection: "column",
             justifyContent: "space-between",
             p: 2,
-            maxHeight: "400px", // Para evitar que se expanda demasiado
-            overflowY: "auto", // Scroll automático
+            maxHeight: "1000px", // Aumentar altura máxima
+            overflowY: "auto",
           }}
         >
           {/* Encabezado del chat */}
@@ -111,6 +135,8 @@ const ChatFloating = () => {
               display: "flex",
               flexDirection: "column",
               gap: 1,
+              maxHeight: "300px", // Altura máxima para permitir scrolling
+              overflowY: "auto", // Scroll automático
             }}
           >
             {messages.map((message, index) => (
@@ -123,11 +149,23 @@ const ChatFloating = () => {
                   borderRadius: "10px",
                   p: 1,
                   maxWidth: "80%",
+                  wordWrap: "break-word", // Ajustar texto largo
+                  background: "#f0f0f0", // Color de fondo plomo para el bot
                 }}
               >
-                <Typography variant="body2">{message.text}</Typography>
+                <Typography variant="body2">
+                  {message.sender === "bot" ? formatMessage(message.text) : message.text}
+                </Typography>
               </Box>
             ))}
+
+            {/* Mostrar indicador de carga mientras espera la respuesta */}
+            {loading && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 1 }}>
+                <CircularProgress size={24} />
+                <Typography sx={{ ml: 1 }}>Respondiendo...</Typography>
+              </Box>
+            )}
           </Box>
 
           {/* Campo de entrada de texto */}
@@ -135,9 +173,11 @@ const ChatFloating = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-              backgroundColor: "white", // Fondo blanco
-              borderRadius: 1, // Bordes redondeados
-              paddingLeft: 0.5, // Espaciado a la izquierda
+              backgroundColor: "white",
+              borderRadius: 1,
+              paddingLeft: 0.5,
+              paddingBottom: 0.5, // Ajustar espaciado inferior
+              paddingTop: 0.5, // Ajustar espaciado superior
             }}
           >
             <TextField
@@ -147,7 +187,12 @@ const ChatFloating = () => {
               placeholder="Escribe tu mensaje..."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              sx={{ mr: 1 }} // Espacio a la derecha del TextField
+              sx={{ mr: 1 }}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSendMessage();
+                }
+              }}
             />
             <IconButton color="primary" size="large" onClick={handleSendMessage}>
               <SendIcon />
