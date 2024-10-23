@@ -1,13 +1,14 @@
 package com.mindmakers.dashboard_api.course.services;
 
 
-import com.mindmakers.dashboard_api.course.entities.Course;
 import com.mindmakers.dashboard_api.course.repositories.CourseRepository;
+import com.mindmakers.dashboard_api.course.services.dto.ResponseCourse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -15,19 +16,29 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+    public List<ResponseCourse> getAllCourses() {
+        return courseRepository.findAll().stream()
+                .map(ResponseCourse::new)
+                .collect(Collectors.toList());
     }
 
-    public Optional<Course> getCourseById(Integer id) {
-        return courseRepository.findById(id);
+
+    public Optional<ResponseCourse> getCourseById(Integer id) {
+        return courseRepository.findById(id)
+                .map(ResponseCourse::new);
     }
 
-    public List<Course> getCoursesByName(String name) {
-        return courseRepository.findByNameContainingIgnoreCase(name);
+
+    public List<ResponseCourse> getCoursesByName(String name) {
+        return courseRepository.findByNameContainingIgnoreCase(name).stream()
+                .map(ResponseCourse::new)
+                .collect(Collectors.toList());
     }
 
-    public List<Course> getCoursesByTeacherName(String teacherName) {
-        return courseRepository.findByTeacherNameContainingIgnoreCase(teacherName);
+
+    public List<ResponseCourse> getCoursesByTeacherName(String teacherName) {
+        return courseRepository.findByTeacherNameContainingIgnoreCase(teacherName).stream()
+                .map(ResponseCourse::new)
+                .collect(Collectors.toList());
     }
 }
